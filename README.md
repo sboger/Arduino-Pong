@@ -2,6 +2,8 @@ Pong game by Erik Holk altered for the Wemos D1 mini and the Wemos 64x48 oled sh
 ===
 Pong... On your Wemos D1 mini with the Wemos oled shield.
 
+Just altered this. Have not tested buttons or human player.
+
 Developed on Arduino 1.8.3
 
 ## Build instructions
