@@ -7,26 +7,24 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include "Adafruit_SSD1306.h"
 
 #define UP_BUTTON 2
 #define DOWN_BUTTON 3
 
 const unsigned long PADDLE_RATE = 33;
 const unsigned long BALL_RATE = 16;
-const uint8_t PADDLE_HEIGHT = 24;
+const uint8_t PADDLE_HEIGHT = 12;
 
 // On MEGA, MOSI is 51, CLK is 52
-#define OLED_DC    11
-#define OLED_CS    12
-#define OLED_RESET 13
+#define OLED_RESET 0
 // MOSI is Data pin on display breakout
 
-Adafruit_SSD1306 display(OLED_DC, OLED_RESET, OLED_CS);
+Adafruit_SSD1306 display(OLED_RESET);
 
 void drawCourt();
 
-uint8_t ball_x = 64, ball_y = 32;
+uint8_t ball_x = 32, ball_y = 24;
 uint8_t ball_dir_x = 1, ball_dir_y = 1;
 unsigned long ball_update;
 
@@ -73,13 +71,13 @@ void loop() {
         uint8_t new_y = ball_y + ball_dir_y;
 
         // Check if we hit the vertical walls
-        if(new_x == 0 || new_x == 127) {
+        if(new_x == 0 || new_x == 63) {
             ball_dir_x = -ball_dir_x;
             new_x += ball_dir_x + ball_dir_x;
         }
 
         // Check if we hit the horizontal walls.
-        if(new_y == 0 || new_y == 63) {
+        if(new_y == 0 || new_y == 47) {
             ball_dir_y = -ball_dir_y;
             new_y += ball_dir_y + ball_dir_y;
         }
@@ -122,7 +120,7 @@ void loop() {
             cpu_y += 1;
         }
         if(cpu_y < 1) cpu_y = 1;
-        if(cpu_y + PADDLE_HEIGHT > 63) cpu_y = 63 - PADDLE_HEIGHT;
+        if(cpu_y + PADDLE_HEIGHT > 47) cpu_y = 47 - PADDLE_HEIGHT;
         display.drawFastVLine(CPU_X, cpu_y, PADDLE_HEIGHT, WHITE);
 
         // Player paddle
@@ -135,7 +133,7 @@ void loop() {
         }
         up_state = down_state = false;
         if(player_y < 1) player_y = 1;
-        if(player_y + PADDLE_HEIGHT > 63) player_y = 63 - PADDLE_HEIGHT;
+        if(player_y + PADDLE_HEIGHT > 47) player_y = 47 - PADDLE_HEIGHT;
         display.drawFastVLine(PLAYER_X, player_y, PADDLE_HEIGHT, WHITE);
 
         update = true;
@@ -147,5 +145,5 @@ void loop() {
 
 
 void drawCourt() {
-    display.drawRect(0, 0, 128, 64, WHITE);
+    display.drawRect(0, 0, 64, 48, WHITE);
 }
