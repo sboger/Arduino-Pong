@@ -7,6 +7,9 @@ Just altered this. Have not tested buttons or human player.
 Developed on Arduino 1.8.3
 
 ## Build instructions
+
+Install the Adafruit_GFX library via Sketch->Include Library->Manage Libraries
+
 Clone into your ~Ardunio directory, open in arduino IDE, compile, and install.
 ```
   cd ~/Arduino
